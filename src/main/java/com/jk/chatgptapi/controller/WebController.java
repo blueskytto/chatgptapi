@@ -20,7 +20,7 @@ public class WebController {
 
     @GetMapping(value = "/")
     public String CreateChatMainForm(Model model) {
-        model.addAttribute("SearchForm", new SearchForm());
+        model.addAttribute("searchForm", new SearchForm());
         return "chat/main";
     }
 
@@ -33,7 +33,7 @@ public class WebController {
 
         String rsData = gptApiService.getCompletions(searchForm.getPrompt());
         searchForm.setRsData(rsData);
-        model.addAttribute("SearchForm", searchForm);
+        model.addAttribute("searchForm", searchForm);
 
         return "chat/main";
     }

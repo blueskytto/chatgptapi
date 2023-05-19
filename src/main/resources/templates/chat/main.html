@@ -13,7 +13,7 @@
     <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
     <div class="jumbotron"><h2>NH-ChatGPT</h2>
 
-        <form role="form" action="/search" th:object="${SearchForm}" method="post">
+        <form role="form" action="/search" th:object="${searchForm}" method="post">
             <div class="form-group">
                 <label th:for="prompt">대화 내용 입력</label>
                 <input type="text" th:field="*{prompt}" class="form-control" placeholder="내용을 입력하세요"
@@ -24,7 +24,6 @@
         </form>
 
         <div id="resultDiv">
-            <p th:if="${rsData}!=null" th:text="${rsData}"></p>
         </div>
 
     </div>

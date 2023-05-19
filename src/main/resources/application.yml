@@ -17,12 +17,14 @@ spring:
         format_sql: true
         show_sql: true
 
-logging.level:
-    org.hibernate.SQL: debug
-
 chatgpt:
   apiKey: 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
   apiEndPoint: https://api.openai.com/v1/completions
   apiModel: text-davinci-003
   apiTemperature: 1.0
   apiMaxTokens: 1000
+
+logging:
+  level:
+    com.jk: debug
+    org.hibernate.SQL: debug

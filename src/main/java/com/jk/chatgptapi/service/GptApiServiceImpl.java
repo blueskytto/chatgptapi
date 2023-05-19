@@ -6,6 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -42,6 +43,7 @@ public class GptApiServiceImpl implements GptApiService {
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         ResponseEntity<GptApiResponseDTO> response = restTemplate.postForEntity(API_ENDPOINT, requestEntity, GptApiResponseDTO.class);
 
         return response.getBody().getChoices().get(0).getText();
