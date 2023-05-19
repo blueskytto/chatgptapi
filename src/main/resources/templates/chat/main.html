@@ -8,16 +8,28 @@
 </style>
 <body>
 <script th:inline="javascript">
-    function dataSend(){
-        const inData =$("#search-input").val();
+
+    $(document).ready(function() {
+        $("#search-form").submit(function(){
+            $("#search-btn").click();
+            return false;
+        });
+    });
+
+    function dataSend() {
+
+        $('#Progress_Loading').show();
+
+        const inData = $("#search-input").val();
         const searchForm = {
-            prompt:inData
+            prompt: inData
         };
         $.ajax({
             url: "/search",
             data: searchForm,
             type: 'POST',
-        }).done(function (data){
+        }).done(function (data) {
+            $('#Progress_Loading').hide();
             $("#resultDiv").replaceWith(data);
         });
     }
@@ -26,14 +38,19 @@
     <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
     <div class="jumbotron"><h2>NH-ChatGPT</h2>
 
-        <form role="form" action="/search">
+        <form role="form" id="search-form">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="내용을 입력하세요" id="search-input">
+                <input type="text" class="form-control" placeholder="내용을 입력하세요" id="search-input"/>
             </div>
-            <button type="button" class="btn btn-primary" onclick="dataSend()">Submit</button>
+            <button type="button" id="search-btn" class="btn btn-primary" onclick="dataSend()">Submit</button>
         </form>
 
         <div id="resultDiv">
+            <p class="lead"></p>
+            <div id="Progress_Loading" style="display: none;"><!-- 로딩바 -->
+                <img src="/img/Loading.gif"/>
+                <p style="font-size: x-large; font-weight: bold;">로딩 중 입니다...</p>
+            </div>
             <p th:if="${rsData}!=null" th:text="${rsData}"></p>
         </div>
 
