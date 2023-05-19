@@ -43,7 +43,6 @@ public class GptApiServiceImpl implements GptApiService {
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         ResponseEntity<GptApiResponseDTO> response = restTemplate.postForEntity(API_ENDPOINT, requestEntity, GptApiResponseDTO.class);
 
         return response.getBody().getChoices().get(0).getText();

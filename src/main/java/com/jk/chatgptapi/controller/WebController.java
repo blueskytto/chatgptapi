@@ -27,14 +27,13 @@ public class WebController {
     @PostMapping(value = "/search")
     public String SearchChatMain(@Valid SearchForm searchForm, BindingResult result, Model model) {
         if(result.hasErrors()){
-            return "chat/main";
+            return "chat/main :: #resultDiv";
         }
         log.debug("ChatGPT API Start");
 
         String rsData = gptApiService.getCompletions(searchForm.getPrompt());
-        searchForm.setRsData(rsData);
-        model.addAttribute("searchForm", searchForm);
+        model.addAttribute("rsData", rsData);
 
-        return "chat/main";
+        return "chat/main :: #resultDiv";
     }
 }

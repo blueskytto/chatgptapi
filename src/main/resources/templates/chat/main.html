@@ -1,29 +1,40 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: header}">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <style>
-        .fieldError {
-            border-color: #bd2130;
-        }
-    </style>
-</head>
+<head th:replace="~{fragments/header :: header}"/>
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
 <body>
+<script th:inline="javascript">
+    function dataSend(){
+        const inData =$("#search-input").val();
+        const searchForm = {
+            prompt:inData
+        };
+        $.ajax({
+            url: "/search",
+            data: searchForm,
+            type: 'POST',
+        }).done(function (data){
+            $("#resultDiv").replaceWith(data);
+        });
+    }
+</script>
 <div class="container">
     <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
     <div class="jumbotron"><h2>NH-ChatGPT</h2>
 
-        <form role="form" action="/search" th:object="${searchForm}" method="post">
+        <form role="form" action="/search">
             <div class="form-group">
-                <label th:for="prompt">대화 내용 입력</label>
-                <input type="text" th:field="*{prompt}" class="form-control" placeholder="내용을 입력하세요"
-                       th:class="${#fields.hasErrors('prompt')}? 'form-control fieldError' : 'form-control'">
-                <p th:if="${#fields.hasErrors('prompt')}" th:errors="*{prompt}">Incorrect date</p>
+                <input type="text" class="form-control" placeholder="내용을 입력하세요" id="search-input">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary" onclick="dataSend()">Submit</button>
         </form>
 
         <div id="resultDiv">
+            <p th:if="${rsData}!=null" th:text="${rsData}"></p>
         </div>
 
     </div>
