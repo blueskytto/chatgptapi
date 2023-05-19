@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: testuser
+    password: testuser
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+logging.level:
+    org.hibernate.SQL: debug
+
+chatgpt:
+  apiKey: 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
+  apiEndPoint: https://api.openai.com/v1/completions
+  apiModel: text-davinci-003
+  apiTemperature: 1.0
+  apiMaxTokens: 1000
